@@ -59,7 +59,8 @@
 	    return {
 	      id: "",
 	      username: "",
-	      accessToken: ""
+	      accessToken: "",
+	      gists: []
 	    };
 	  },
 	  loadUserData: function loadUserData() {
@@ -70,7 +71,7 @@
 	
 	    var gistReq = new XMLHttpRequest();
 	    gistReq.addEventListener('load', function () {
-	      console.log(this);
+	      this.setState({ gists: JSON.parse(this.responseText) });
 	    });
 	    gistReq.open('GET', "https://api.github.com/users/" + user.username + "/gists");
 	    gistReq.setRequestHeader("Authorization", "token " + user.accessToken);
@@ -134,7 +135,11 @@
 	  window.location = "/";
 	}
 	
-	ReactDOM.render(React.createElement(GistManagerPage, null), document.getElementById('content'));
+	if (localStorage.getItem('user')) {
+	  ReactDOM.render(React.createElement(GistManagerPage, null), document.getElementById('content'));
+	} else {
+	  window.location = "/auth/github";
+	}
 
 /***/ },
 /* 1 */

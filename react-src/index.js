@@ -10,7 +10,8 @@ const GistManagerPage = React.createClass({
     return {
       id : "",
       username : "",
-      accessToken : ""
+      accessToken : "",
+      gists : []
     }
   },
   loadUserData: function(){
@@ -21,7 +22,7 @@ const GistManagerPage = React.createClass({
 
     var gistReq = new XMLHttpRequest();
     gistReq.addEventListener('load', function(){
-      console.log(this)
+      this.setState({gists : JSON.parse(this.responseText)});
     })
     gistReq.open('GET', "https://api.github.com/users/" + user.username + "/gists");
     gistReq.setRequestHeader("Authorization", "token " + user.accessToken);
@@ -69,7 +70,12 @@ if(window.location.search.length > 15){
   window.location = "/";
 }
 
-ReactDOM.render(
-  <GistManagerPage />,
-  document.getElementById('content')
-);
+if(localStorage.getItem('user')) {
+  ReactDOM.render(
+    <GistManagerPage />,
+    document.getElementById('content')
+  );
+}
+else {
+  window.location = "/auth/github"
+}
