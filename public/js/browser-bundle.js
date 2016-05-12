@@ -93,7 +93,7 @@
 	  var fieldsObj = {};
 	
 	  fields.forEach(function (element) {
-	    fieldsObj[element[0]] = element[1];
+	    fieldsObj[element[0]] = decodeURIComponent(element[1]);
 	  });
 	
 	  return fieldsObj;
