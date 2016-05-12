@@ -62,12 +62,8 @@
 	    };
 	  },
 	  loadUserData: function loadUserData() {
-	    var req = new XMLHttpRequest();
-	    req.addEventListener("load", function (response) {
-	      console.log(response);
-	    });
-	    req.open("GET", "/user");
-	    req.send();
+	    var user = JSON.parse(localStorage.getItem('user'));
+	    console.log(user);
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.loadUserData();
@@ -86,6 +82,27 @@
 	    );
 	  }
 	});
+	
+	function urlQuery(fields) {
+	  fields = fields.substring(1);
+	  fields = fields.split("&");
+	  fields = fields.map(function (element) {
+	    return element.split("=");
+	  });
+	
+	  var fieldsObj = {};
+	
+	  fields.forEach(function (element) {
+	    fieldsObj[element[0]] = element[1];
+	  });
+	
+	  return fieldsObj;
+	}
+	
+	if (window.location.search) {
+	  var userData = urlQuery(window.location.search);
+	  localStorage.setItem('user', JSON.stringify(userData));
+	}
 	
 	ReactDOM.render(React.createElement(GistManagerPage, null), document.getElementById('content'));
 
