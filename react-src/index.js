@@ -4,26 +4,35 @@ const React          = require('react'),
       GistContent    = require('./components/gistcontent')
       ;
 
-
 //look at ES6 class declarations
 const GistManagerPage = React.createClass({
   getInitialState: function(){
     return {
-      userData : "",
+      id : "",
+      username : "",
       accessToken : ""
     }
   },
   loadUserData: function(){
     var user = JSON.parse(localStorage.getItem('user'));
-    console.log(user);
+    this.setState({id : user.id});
+    this.setState({username : user.username});
+    this.setState({accessToken : user.accessToken});
+  },
+  loadUserGists: function(){
+    console.log("loading....")
   },
   componentDidMount: function(){
     this.loadUserData();
+    this.loadUserGists();
   },
   render : function(){
     return (
       <div className="mainPage">
         <h1>Welcome to Gist-Manager</h1>
+        <h2>Welcome: {this.state.username}</h2>
+        <p>id : {this.state.id}</p>
+        <p>accessToken : {this.state.accessToken}</p>
         <GistList list="List Item From Above"/>
         <GistContent content="Content From Above"/>
       </div>
@@ -48,9 +57,12 @@ function urlQuery(fields){
   return fieldsObj;
 }
 
-if(window.location.search){
+
+
+if(window.location.search.length > 15){
   var userData = urlQuery(window.location.search);
   localStorage.setItem('user', JSON.stringify(userData));
+  window.location = "/";
 }
 
 ReactDOM.render(

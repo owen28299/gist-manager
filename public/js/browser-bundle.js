@@ -57,16 +57,23 @@
 	
 	  getInitialState: function getInitialState() {
 	    return {
-	      userData: "",
+	      id: "",
+	      username: "",
 	      accessToken: ""
 	    };
 	  },
 	  loadUserData: function loadUserData() {
 	    var user = JSON.parse(localStorage.getItem('user'));
-	    console.log(user);
+	    this.setState({ id: user.id });
+	    this.setState({ username: user.username });
+	    this.setState({ accessToken: user.accessToken });
+	  },
+	  loadUserGists: function loadUserGists() {
+	    console.log("loading....");
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.loadUserData();
+	    this.loadUserGists();
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -76,6 +83,24 @@
 	        'h1',
 	        null,
 	        'Welcome to Gist-Manager'
+	      ),
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Welcome: ',
+	        this.state.username
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        'id : ',
+	        this.state.id
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        'accessToken : ',
+	        this.state.accessToken
 	      ),
 	      React.createElement(GistList, { list: 'List Item From Above' }),
 	      React.createElement(GistContent, { content: 'Content From Above' })
@@ -99,9 +124,10 @@
 	  return fieldsObj;
 	}
 	
-	if (window.location.search) {
+	if (window.location.search.length > 15) {
 	  var userData = urlQuery(window.location.search);
 	  localStorage.setItem('user', JSON.stringify(userData));
+	  window.location = "/";
 	}
 	
 	ReactDOM.render(React.createElement(GistManagerPage, null), document.getElementById('content'));

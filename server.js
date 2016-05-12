@@ -8,7 +8,7 @@ const express        = require('express'),
       GitHubStrategy = require('passport-github2').Strategy,
       Github         = require('./githubfiles'),
       bodyParser     = require("body-parser"),
-      queryString = require('querystring')
+      queryString    = require('querystring')
       ;
 
 passport.serializeUser(function(user, done) {
