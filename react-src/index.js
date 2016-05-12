@@ -7,6 +7,23 @@ const React          = require('react'),
 
 //look at ES6 class declarations
 const GistManagerPage = React.createClass({
+  getInitialState: function(){
+    return {
+      userData : "",
+      accessToken : ""
+    }
+  },
+  loadUserData: function(){
+    var req = new XMLHttpRequest();
+    req.addEventListener("load", function(response){
+      console.log(response);
+    })
+    req.open("GET", "/user");
+    req.send();
+  },
+  componentDidMount: function(){
+    this.loadUserData();
+  },
   render : function(){
     return (
       <div className="mainPage">

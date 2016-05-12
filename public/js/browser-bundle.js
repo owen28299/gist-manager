@@ -55,6 +55,23 @@
 	var GistManagerPage = React.createClass({
 	  displayName: 'GistManagerPage',
 	
+	  getInitialState: function getInitialState() {
+	    return {
+	      userData: "",
+	      accessToken: ""
+	    };
+	  },
+	  loadUserData: function loadUserData() {
+	    var req = new XMLHttpRequest();
+	    req.addEventListener("load", function (response) {
+	      console.log(response);
+	    });
+	    req.open("GET", "/user");
+	    req.send();
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.loadUserData();
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
