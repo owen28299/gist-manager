@@ -46,8 +46,10 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(1);
-	var ReactDOM = __webpack_require__(158);
+	var React = __webpack_require__(1),
+	    ReactDOM = __webpack_require__(158),
+	    GistList = __webpack_require__(159),
+	    GistContent = __webpack_require__(160);
 	
 	var GistManagerPage = React.createClass({
 	  displayName: 'GistManagerPage',
@@ -55,12 +57,14 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { 'class': 'mainPage' },
+	      { className: 'mainPage' },
 	      React.createElement(
 	        'h1',
 	        null,
 	        'Welcome to Gist-Manager'
-	      )
+	      ),
+	      React.createElement(GistList, { list: 'List Item From Above' }),
+	      React.createElement(GistContent, { content: 'Content From Above' })
 	    );
 	  }
 	});
@@ -19727,6 +19731,68 @@
 	'use strict';
 	
 	module.exports = __webpack_require__(3);
+
+/***/ },
+/* 159 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var GistList = React.createClass({
+	  displayName: "GistList",
+	
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "gistlist" },
+	      React.createElement(
+	        "h2",
+	        null,
+	        "Gist List"
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        this.props.list
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = GistList;
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var GistContent = React.createClass({
+	  displayName: "GistContent",
+	
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "gistcontent" },
+	      React.createElement(
+	        "h2",
+	        null,
+	        "Gist Content"
+	      ),
+	      React.createElement(
+	        "p",
+	        null,
+	        this.props.content
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = GistContent;
 
 /***/ }
 /******/ ]);

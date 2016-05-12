@@ -1,11 +1,16 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+const React       = require('react'),
+      ReactDOM    = require('react-dom'),
+      GistList    = require('./components/gistlist'),
+      GistContent = require('./components/gistcontent')
+      ;
 
-var GistManagerPage = React.createClass({
+const GistManagerPage = React.createClass({
   render : function(){
     return (
-      <div class="mainPage">
+      <div className="mainPage">
         <h1>Welcome to Gist-Manager</h1>
+        <GistList list="List Item From Above"/>
+        <GistContent content="Content From Above"/>
       </div>
     )
   }
