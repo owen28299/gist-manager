@@ -49,11 +49,23 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
 	
-	ReactDOM.render(React.createElement(
-	  'h1',
-	  null,
-	  'Hello React!'
-	), document.getElementById('root'));
+	var GistManagerPage = React.createClass({
+	  displayName: 'GistManagerPage',
+	
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { 'class': 'mainPage' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        'Welcome to Gist-Manager'
+	      )
+	    );
+	  }
+	});
+	
+	ReactDOM.render(React.createElement(GistManagerPage, null), document.getElementById('content'));
 
 /***/ },
 /* 1 */
