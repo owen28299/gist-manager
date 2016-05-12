@@ -1,9 +1,11 @@
-const React       = require('react'),
-      ReactDOM    = require('react-dom'),
-      GistList    = require('./components/gistlist'),
-      GistContent = require('./components/gistcontent')
+const React          = require('react'),
+      ReactDOM       = require('react-dom'),
+      GistList       = require('./components/gistlist'),
+      GistContent    = require('./components/gistcontent')
       ;
 
+
+//look at ES6 class declarations
 const GistManagerPage = React.createClass({
   render : function(){
     return (

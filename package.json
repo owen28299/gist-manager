@@ -10,7 +10,12 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
+    "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "express-partials": "^0.3.0",
+    "express-session": "^1.13.0",
+    "passport": "^0.3.2",
+    "passport-github2": "^0.1.10",
     "react": "^0.14.5",
     "react-dom": "^0.14.5"
   },

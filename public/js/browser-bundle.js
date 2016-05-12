@@ -51,6 +51,7 @@
 	    GistList = __webpack_require__(159),
 	    GistContent = __webpack_require__(160);
 	
+	//look at ES6 class declarations
 	var GistManagerPage = React.createClass({
 	  displayName: 'GistManagerPage',
 	
