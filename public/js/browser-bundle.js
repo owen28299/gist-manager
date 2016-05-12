@@ -67,13 +67,17 @@
 	    this.setState({ id: user.id });
 	    this.setState({ username: user.username });
 	    this.setState({ accessToken: user.accessToken });
-	  },
-	  loadUserGists: function loadUserGists() {
-	    console.log("loading....");
+	
+	    var gistReq = new XMLHttpRequest();
+	    gistReq.addEventListener('load', function () {
+	      console.log(this);
+	    });
+	    gistReq.open('GET', "https://api.github.com/users/" + user.username + "/gists");
+	    gistReq.setRequestHeader("Authorization", "token " + user.accessToken);
+	    gistReq.send();
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.loadUserData();
-	    this.loadUserGists();
 	  },
 	  render: function render() {
 	    return React.createElement(

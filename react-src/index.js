@@ -18,13 +18,17 @@ const GistManagerPage = React.createClass({
     this.setState({id : user.id});
     this.setState({username : user.username});
     this.setState({accessToken : user.accessToken});
-  },
-  loadUserGists: function(){
-    console.log("loading....")
+
+    var gistReq = new XMLHttpRequest();
+    gistReq.addEventListener('load', function(){
+      console.log(this)
+    })
+    gistReq.open('GET', "https://api.github.com/users/" + user.username + "/gists");
+    gistReq.setRequestHeader("Authorization", "token " + user.accessToken);
+    gistReq.send();
   },
   componentDidMount: function(){
     this.loadUserData();
-    this.loadUserGists();
   },
   render : function(){
     return (
