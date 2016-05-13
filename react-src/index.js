@@ -1,7 +1,17 @@
 const React          = require('react'),
       ReactDOM       = require('react-dom'),
-      GistList       = require('./components/gistlist')
+      GistList       = require('./components/gistlist'),
+      CreateGist     = require('./components/creategist'),
+      Header         = require('./components/header')
       ;
+
+const ReactRouter = require('react-router')
+const Router = ReactRouter.Router;
+const Route = ReactRouter.Route;
+const IndexRoute = ReactRouter.IndexRoute;
+const Link = ReactRouter.Link;
+const browserHistory = ReactRouter.browserHistory;
+
 
 //look at ES6 class declarations
 const GistManagerPage = React.createClass({
@@ -35,8 +45,6 @@ const GistManagerPage = React.createClass({
   render : function(){
     return (
       <div className="mainPage">
-        <h1>Welcome to Gist-Manager</h1>
-        <h2>Welcome: {this.state.username}</h2>
         <GistList list={this.state.gists}/>
       </div>
     )
