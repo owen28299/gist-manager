@@ -69,6 +69,13 @@ app.get('/user', ensureAuthenticated, function(req, res){
   res.json(req.user);
 });
 
+app.get('*', function(req, res){
+  res.sendFile('./public/index.html',
+              {
+                root  : __dirname
+              });
+});
+
 app.listen(PORT, function(){
   console.log(`Server listening on port: ${PORT}`);
 });

@@ -45,6 +45,7 @@ const GistManagerPage = React.createClass({
   render : function(){
     return (
       <div className="mainPage">
+        <a href="/creategist">Create New Gist</a>
         <GistList list={this.state.gists}/>
       </div>
     )
@@ -78,7 +79,12 @@ if(window.location.search.length > 15){
 
 if(localStorage.getItem('user')) {
   ReactDOM.render(
-    <GistManagerPage />,
+    <Router history={browserHistory}>
+      <Route path="/" component={Header}>
+        <IndexRoute component={GistManagerPage}></IndexRoute>
+        <Route path="creategist" component={CreateGist}></Route>
+      </Route>
+    </Router>,
     document.getElementById('content')
   );
 }
