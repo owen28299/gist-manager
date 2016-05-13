@@ -19877,8 +19877,30 @@
 	
 	  render: function render() {
 	    var files = this.props.content.files;
+	    var filesArray = [];
 	
-	    console.log(files);
+	    for (var file in files) {
+	      if (files.hasOwnProperty(file)) {
+	        filesArray.push(files[file]);
+	      }
+	    }
+	
+	    filesArray = filesArray.map(function (element) {
+	      return React.createElement(
+	        "div",
+	        { key: element.raw_url },
+	        React.createElement(
+	          "h3",
+	          null,
+	          element.filename
+	        ),
+	        React.createElement(
+	          "p",
+	          null,
+	          element.content
+	        )
+	      );
+	    });
 	
 	    return React.createElement(
 	      "div",
@@ -19891,7 +19913,7 @@
 	      React.createElement(
 	        "h3",
 	        null,
-	        this.props.content.description
+	        filesArray
 	      )
 	    );
 	  }
