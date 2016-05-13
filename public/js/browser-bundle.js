@@ -96,18 +96,6 @@
 	        'Welcome: ',
 	        this.state.username
 	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        'id : ',
-	        this.state.id
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        'accessToken : ',
-	        this.state.accessToken
-	      ),
 	      React.createElement(GistList, { list: this.state.gists })
 	    );
 	  }
@@ -19851,6 +19839,11 @@
 	        'h2',
 	        null,
 	        'Gist List'
+	      ),
+	      React.createElement(
+	        'button',
+	        null,
+	        'Create New Gist'
 	      ),
 	      React.createElement(
 	        'div',

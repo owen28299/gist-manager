@@ -37,8 +37,6 @@ const GistManagerPage = React.createClass({
       <div className="mainPage">
         <h1>Welcome to Gist-Manager</h1>
         <h2>Welcome: {this.state.username}</h2>
-        <p>id : {this.state.id}</p>
-        <p>accessToken : {this.state.accessToken}</p>
         <GistList list={this.state.gists}/>
       </div>
     )
