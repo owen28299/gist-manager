@@ -19876,7 +19876,9 @@
 	  displayName: "GistContent",
 	
 	  render: function render() {
-	    var files = Object.getOwnPropertyNames(this.props.content.files);
+	    var files = this.props.content.files;
+	
+	    console.log(files);
 	
 	    return React.createElement(
 	      "div",

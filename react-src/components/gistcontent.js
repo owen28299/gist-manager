@@ -2,7 +2,9 @@ const React = require('react');
 
 const GistContent = React.createClass({
   render : function(){
-    var files = Object.getOwnPropertyNames(this.props.content.files);
+    var files = (this.props.content.files);
+
+    console.log(files);
 
     return (
       <div className="gistcontent">
