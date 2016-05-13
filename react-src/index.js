@@ -2,7 +2,8 @@ const React          = require('react'),
       ReactDOM       = require('react-dom'),
       GistList       = require('./components/gistlist'),
       CreateGist     = require('./components/creategist'),
-      Header         = require('./components/header')
+      Header         = require('./components/header'),
+      EditGist       = require('./components/editgist')
       ;
 
 const ReactRouter = require('react-router')
@@ -83,6 +84,7 @@ if(localStorage.getItem('user')) {
       <Route path="/" component={Header}>
         <IndexRoute component={GistManagerPage}></IndexRoute>
         <Route path="creategist" component={CreateGist}></Route>
+        <Route path="editgist" component={EditGist}></Route>
       </Route>
     </Router>,
     document.getElementById('content')

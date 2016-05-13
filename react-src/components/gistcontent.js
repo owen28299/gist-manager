@@ -20,10 +20,15 @@ const GistContent = React.createClass({
       )
     });
 
+    if(filesArray.length > 0){
+      var editLink = (<a href="/editgist">Edit This Gist</a>)
+    }
+
     return (
       <div className="gistcontent">
         <h2>Gist Content</h2>
-        <h3>{filesArray}</h3>
+        {editLink}
+        {filesArray}
       </div>
     )
   }

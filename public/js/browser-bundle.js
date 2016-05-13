@@ -50,7 +50,8 @@
 	    ReactDOM = __webpack_require__(158),
 	    GistList = __webpack_require__(159),
 	    CreateGist = __webpack_require__(161),
-	    Header = __webpack_require__(162);
+	    Header = __webpack_require__(162),
+	    EditGist = __webpack_require__(224);
 	
 	var ReactRouter = __webpack_require__(163);
 	var Router = ReactRouter.Router;
@@ -134,7 +135,8 @@
 	      Route,
 	      { path: '/', component: Header },
 	      React.createElement(IndexRoute, { component: GistManagerPage }),
-	      React.createElement(Route, { path: 'creategist', component: CreateGist })
+	      React.createElement(Route, { path: 'creategist', component: CreateGist }),
+	      React.createElement(Route, { path: 'editgist', component: EditGist })
 	    )
 	  ), document.getElementById('content'));
 	} else {
@@ -19902,6 +19904,14 @@
 	      );
 	    });
 	
+	    if (filesArray.length > 0) {
+	      var editLink = React.createElement(
+	        "a",
+	        { href: "/editgist" },
+	        "Edit This Gist"
+	      );
+	    }
+	
 	    return React.createElement(
 	      "div",
 	      { className: "gistcontent" },
@@ -19910,11 +19920,8 @@
 	        null,
 	        "Gist Content"
 	      ),
-	      React.createElement(
-	        "h3",
-	        null,
-	        filesArray
-	      )
+	      editLink,
+	      filesArray
 	    );
 	  }
 	});
@@ -19936,22 +19943,15 @@
 	    return {
 	      description: "",
 	      filename: "",
-	      content: "",
-	      publicity: "public"
+	      content: ""
 	    };
 	  },
 	  handleSubmit: function handleSubmit(event) {
 	    var user = JSON.parse(localStorage.getItem('user'));
 	    event.preventDefault();
 	
-	    var publicity = true;
-	    if (this.state.publicity === "private") {
-	      publicity = false;
-	    }
-	
 	    var newGist = {
 	      description: this.state.description,
-	      public: publicity,
 	      files: {}
 	    };
 	
@@ -19978,13 +19978,10 @@
 	  handleContentChange: function handleContentChange(event) {
 	    this.setState({ content: event.target.value });
 	  },
-	  handlePublicityChange: function handlePublicityChange(event) {
-	    this.setState({ publicity: event.target.value });
-	  },
 	  render: function render() {
 	    return React.createElement(
 	      "div",
-	      { className: "Add Gist" },
+	      { className: "Edit Gist" },
 	      React.createElement(
 	        "a",
 	        { href: "/" },
@@ -19993,7 +19990,7 @@
 	      React.createElement(
 	        "h2",
 	        null,
-	        "Create Gist"
+	        "Edit Gist"
 	      ),
 	      React.createElement(
 	        "form",
@@ -20031,20 +20028,6 @@
 	          value: this.state.content,
 	          onChange: this.handleContentChange
 	        }),
-	        React.createElement(
-	          "select",
-	          { value: this.state.publicity, onChange: this.handlePublicityChange },
-	          React.createElement(
-	            "option",
-	            { value: "public" },
-	            "Public"
-	          ),
-	          React.createElement(
-	            "option",
-	            { value: "private" },
-	            "Private"
-	          )
-	        ),
 	        React.createElement("input", { type: "submit" })
 	      )
 	    );
@@ -25864,6 +25847,138 @@
 	
 	exports.default = (0, _createRouterHistory2.default)(_createHashHistory2.default);
 	module.exports = exports['default'];
+
+/***/ },
+/* 224 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var EditGist = React.createClass({
+	  displayName: "EditGist",
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      description: "",
+	      filename: "",
+	      content: "",
+	      publicity: "public"
+	    };
+	  },
+	  handleSubmit: function handleSubmit(event) {
+	    var user = JSON.parse(localStorage.getItem('user'));
+	    event.preventDefault();
+	
+	    var publicity = true;
+	    if (this.state.publicity === "private") {
+	      publicity = false;
+	    }
+	
+	    var newGist = {
+	      description: this.state.description,
+	      public: publicity,
+	      files: {}
+	    };
+	
+	    var filename = this.state.filename + ".md";
+	
+	    newGist.files[filename] = {
+	      content: this.state.content
+	    };
+	
+	    var newReq = new XMLHttpRequest();
+	    newReq.addEventListener('load', function () {
+	      console.log(this);
+	    });
+	    newReq.open('POST', "https://api.github.com/gists");
+	    newReq.setRequestHeader("Authorization", "token " + user.accessToken);
+	    newReq.send(JSON.stringify(newGist));
+	  },
+	  handleDescriptionChange: function handleDescriptionChange(event) {
+	    this.setState({ description: event.target.value });
+	  },
+	  handleFileNameChange: function handleFileNameChange(event) {
+	    this.setState({ filename: event.target.value });
+	  },
+	  handleContentChange: function handleContentChange(event) {
+	    this.setState({ content: event.target.value });
+	  },
+	  handlePublicityChange: function handlePublicityChange(event) {
+	    this.setState({ publicity: event.target.value });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "Add Gist" },
+	      React.createElement(
+	        "a",
+	        { href: "/" },
+	        "Back"
+	      ),
+	      React.createElement(
+	        "h2",
+	        null,
+	        "Create Gist"
+	      ),
+	      React.createElement(
+	        "form",
+	        { onSubmit: this.handleSubmit },
+	        React.createElement(
+	          "p",
+	          null,
+	          "Gist Title:"
+	        ),
+	        React.createElement("input", {
+	          type: "text",
+	          placeholder: "Gist Title",
+	          value: this.state.description,
+	          onChange: this.handleDescriptionChange
+	        }),
+	        React.createElement(
+	          "p",
+	          null,
+	          "Gist Filename:"
+	        ),
+	        React.createElement("input", {
+	          type: "text",
+	          placeholder: "Gist Filename",
+	          value: this.state.filename,
+	          onChange: this.handleFileNameChange
+	        }),
+	        React.createElement(
+	          "p",
+	          null,
+	          "Content:"
+	        ),
+	        React.createElement("input", {
+	          type: "text",
+	          placeholder: "Gist Title",
+	          value: this.state.content,
+	          onChange: this.handleContentChange
+	        }),
+	        React.createElement(
+	          "select",
+	          { value: this.state.publicity, onChange: this.handlePublicityChange },
+	          React.createElement(
+	            "option",
+	            { value: "public" },
+	            "Public"
+	          ),
+	          React.createElement(
+	            "option",
+	            { value: "private" },
+	            "Private"
+	          )
+	        ),
+	        React.createElement("input", { type: "submit" })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = EditGist;
 
 /***/ }
 /******/ ]);
