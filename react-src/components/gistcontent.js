@@ -1,6 +1,21 @@
-const React = require('react');
+const React    = require('react'),
+      EditGist = require('./editgist')
+      ;
 
 const GistContent = React.createClass({
+  getInitialState : function(){
+    return {
+      editMode : false
+    }
+  },
+  toggleEditMode : function(){
+    if(this.state.editMode === false){
+      this.setState({editMode : true})
+    }
+    else {
+      this.setState({editMode : false})
+    }
+  },
   render : function(){
     var files = (this.props.content.files);
     var filesArray = [];
@@ -20,15 +35,29 @@ const GistContent = React.createClass({
       )
     });
 
-    if(filesArray.length > 0){
-      var editLink = (<a href="/editgist">Edit This Gist</a>)
+    if(filesArray.length > 0 && this.state.editMode === false){
+      var viewMode = (
+        <div>
+          <button onClick={this.toggleEditMode}>Edit This Gist</button>
+          {filesArray}
+        </div>
+      )
+    }
+
+    if(this.state.editMode === true){
+      var editMode = (
+      <div>
+        <button onClick={this.toggleEditMode}>Cancel</button>
+        <EditGist />
+      </div>
+      )
     }
 
     return (
       <div className="gistcontent">
         <h2>Gist Content</h2>
-        {editLink}
-        {filesArray}
+          {viewMode}
+          {editMode}
       </div>
     )
   }

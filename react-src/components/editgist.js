@@ -6,21 +6,14 @@ const EditGist = React.createClass({
       description : "",
       filename : "",
       content : "",
-      publicity : "public"
     };
   },
   handleSubmit : function(event){
     var user = JSON.parse(localStorage.getItem('user'));
     event.preventDefault();
 
-    var publicity = true;
-    if (this.state.publicity === "private"){
-      publicity = false;
-    }
-
     var newGist = {
       description : this.state.description,
-      public : publicity,
       files : {}
     }
 
@@ -48,14 +41,10 @@ const EditGist = React.createClass({
   handleContentChange : function(event){
     this.setState({content : event.target.value})
   },
-  handlePublicityChange : function(event){
-    this.setState({publicity : event.target.value})
-  },
   render : function(){
     return (
-      <div className="Add Gist">
-        <a href="/">Back</a>
-        <h2>Create Gist</h2>
+      <div className="Edit Gist">
+        <h2>Edit Gist</h2>
         <form onSubmit={this.handleSubmit}>
           <p>Gist Title:</p>
           <input
@@ -78,10 +67,6 @@ const EditGist = React.createClass({
             value={this.state.content}
             onChange={this.handleContentChange}
           />
-          <select value={this.state.publicity} onChange={this.handlePublicityChange}>
-            <option value="public">Public</option>
-            <option value="private">Private</option>
-          </select>
           <input type="submit" />
         </form>
       </div>
