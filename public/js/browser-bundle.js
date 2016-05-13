@@ -69,9 +69,11 @@
 	    this.setState({ username: user.username });
 	    this.setState({ accessToken: user.accessToken });
 	
+	    var that = this;
+	
 	    var gistReq = new XMLHttpRequest();
 	    gistReq.addEventListener('load', function () {
-	      this.setState({ gists: JSON.parse(this.responseText) });
+	      that.setState({ gists: JSON.parse(this.responseText) });
 	    });
 	    gistReq.open('GET', "https://api.github.com/users/" + user.username + "/gists");
 	    gistReq.setRequestHeader("Authorization", "token " + user.accessToken);
@@ -107,7 +109,7 @@
 	        'accessToken : ',
 	        this.state.accessToken
 	      ),
-	      React.createElement(GistList, { list: 'List Item From Above' }),
+	      React.createElement(GistList, { list: this.state.gists }),
 	      React.createElement(GistContent, { content: 'Content From Above' })
 	    );
 	  }
@@ -19813,7 +19815,25 @@
 	var GistList = React.createClass({
 	  displayName: "GistList",
 	
+	
+	  findGist: function findGist(event) {
+	    console.log(event.target.id);
+	  },
 	  render: function render() {
+	
+	    var that = this;
+	
+	    var childNodes = this.props.list.map(function (element) {
+	
+	      var description = element.description || "Untitled";
+	
+	      return React.createElement(
+	        "p",
+	        { id: element.url, onClick: that.findGist, key: element.id },
+	        description
+	      );
+	    });
+	
 	    return React.createElement(
 	      "div",
 	      { className: "gistlist" },
@@ -19822,11 +19842,7 @@
 	        null,
 	        "Gist List"
 	      ),
-	      React.createElement(
-	        "p",
-	        null,
-	        this.props.list
-	      )
+	      childNodes
 	    );
 	  }
 	});

@@ -20,10 +20,12 @@ const GistManagerPage = React.createClass({
     this.setState({username : user.username});
     this.setState({accessToken : user.accessToken});
 
+    var that = this;
+
     var gistReq = new XMLHttpRequest();
     gistReq.addEventListener('load', function(){
-      this.setState({gists : JSON.parse(this.responseText)});
-    })
+      that.setState({gists : JSON.parse(this.responseText)});
+    });
     gistReq.open('GET', "https://api.github.com/users/" + user.username + "/gists");
     gistReq.setRequestHeader("Authorization", "token " + user.accessToken);
     gistReq.send();
@@ -38,7 +40,7 @@ const GistManagerPage = React.createClass({
         <h2>Welcome: {this.state.username}</h2>
         <p>id : {this.state.id}</p>
         <p>accessToken : {this.state.accessToken}</p>
-        <GistList list="List Item From Above"/>
+        <GistList list={this.state.gists}/>
         <GistContent content="Content From Above"/>
       </div>
     )
