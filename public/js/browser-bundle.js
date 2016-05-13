@@ -48,8 +48,7 @@
 	
 	var React = __webpack_require__(1),
 	    ReactDOM = __webpack_require__(158),
-	    GistList = __webpack_require__(159),
-	    GistContent = __webpack_require__(160);
+	    GistList = __webpack_require__(159);
 	
 	//look at ES6 class declarations
 	var GistManagerPage = React.createClass({
@@ -109,8 +108,7 @@
 	        'accessToken : ',
 	        this.state.accessToken
 	      ),
-	      React.createElement(GistList, { list: this.state.gists }),
-	      React.createElement(GistContent, { content: 'Content From Above' })
+	      React.createElement(GistList, { list: this.state.gists })
 	    );
 	  }
 	});
@@ -19808,41 +19806,58 @@
 /* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
-	var React = __webpack_require__(1);
+	var React = __webpack_require__(1),
+	    GistContent = __webpack_require__(160);
 	
 	var GistList = React.createClass({
-	  displayName: "GistList",
+	  displayName: 'GistList',
 	
-	
+	  getInitialState: function getInitialState() {
+	    return {
+	      gist: {}
+	    };
+	  },
 	  findGist: function findGist(event) {
-	    console.log(event.target.id);
+	    var user = JSON.parse(localStorage.getItem('user'));
+	    var that = this;
+	
+	    var gistReq = new XMLHttpRequest();
+	    gistReq.addEventListener('load', function () {
+	      that.setState({ gist: JSON.parse(this.responseText) });
+	    });
+	    gistReq.open('GET', event.target.id);
+	    gistReq.setRequestHeader("Authorization", "token " + user.accessToken);
+	    gistReq.send();
 	  },
 	  render: function render() {
-	
 	    var that = this;
 	
 	    var childNodes = this.props.list.map(function (element) {
-	
 	      var description = element.description || "Untitled";
 	
 	      return React.createElement(
-	        "p",
+	        'p',
 	        { id: element.url, onClick: that.findGist, key: element.id },
 	        description
 	      );
 	    });
 	
 	    return React.createElement(
-	      "div",
-	      { className: "gistlist" },
+	      'div',
+	      { className: 'gistlist' },
 	      React.createElement(
-	        "h2",
+	        'h2',
 	        null,
-	        "Gist List"
+	        'Gist List'
 	      ),
-	      childNodes
+	      React.createElement(
+	        'div',
+	        { className: 'gists' },
+	        childNodes
+	      ),
+	      React.createElement(GistContent, { content: this.state.gist })
 	    );
 	  }
 	});
@@ -19861,6 +19876,8 @@
 	  displayName: "GistContent",
 	
 	  render: function render() {
+	    var files = Object.getOwnPropertyNames(this.props.content.files);
+	
 	    return React.createElement(
 	      "div",
 	      { className: "gistcontent" },
@@ -19870,9 +19887,9 @@
 	        "Gist Content"
 	      ),
 	      React.createElement(
-	        "p",
+	        "h3",
 	        null,
-	        this.props.content
+	        this.props.content.description
 	      )
 	    );
 	  }

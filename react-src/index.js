@@ -1,7 +1,6 @@
 const React          = require('react'),
       ReactDOM       = require('react-dom'),
-      GistList       = require('./components/gistlist'),
-      GistContent    = require('./components/gistcontent')
+      GistList       = require('./components/gistlist')
       ;
 
 //look at ES6 class declarations
@@ -41,7 +40,6 @@ const GistManagerPage = React.createClass({
         <p>id : {this.state.id}</p>
         <p>accessToken : {this.state.accessToken}</p>
         <GistList list={this.state.gists}/>
-        <GistContent content="Content From Above"/>
       </div>
     )
   }
