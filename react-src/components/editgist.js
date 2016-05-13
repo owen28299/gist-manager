@@ -27,11 +27,9 @@ const EditGist = React.createClass({
       filename : this.state.filename
     }
 
-    console.log(newGist);
-
     var newReq = new XMLHttpRequest();
     newReq.addEventListener('load', function(){
-      console.log(this)
+      window.location = "/";
     });
     newReq.open('PATCH', "https://api.github.com/gists/" + this.state.id);
     newReq.setRequestHeader("Authorization", "token " + user.accessToken);
@@ -47,10 +45,22 @@ const EditGist = React.createClass({
   handleContentChange : function(event){
     this.setState({content : event.target.value})
   },
+  handleDelete : function(){
+    var user = JSON.parse(localStorage.getItem('user'));
+
+    var newReq = new XMLHttpRequest();
+    newReq.addEventListener('load', function(){
+      window.location = "/";
+    });
+    newReq.open('DELETE', "https://api.github.com/gists/" + this.state.id);
+    newReq.setRequestHeader("Authorization", "token " + user.accessToken);
+    newReq.send();
+  },
   render : function(){
     return (
       <div className="Edit Gist">
         <h2>Edit Gist</h2>
+        <button onClick={this.handleDelete}>Delete This Gist</button>
         <form onSubmit={this.handleSubmit}>
           <p>Gist Title:</p>
           <input

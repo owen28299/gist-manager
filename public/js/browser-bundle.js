@@ -25938,11 +25938,9 @@
 	      filename: this.state.filename
 	    };
 	
-	    console.log(newGist);
-	
 	    var newReq = new XMLHttpRequest();
 	    newReq.addEventListener('load', function () {
-	      console.log(this);
+	      window.location = "/";
 	    });
 	    newReq.open('PATCH', "https://api.github.com/gists/" + this.state.id);
 	    newReq.setRequestHeader("Authorization", "token " + user.accessToken);
@@ -25957,6 +25955,17 @@
 	  handleContentChange: function handleContentChange(event) {
 	    this.setState({ content: event.target.value });
 	  },
+	  handleDelete: function handleDelete() {
+	    var user = JSON.parse(localStorage.getItem('user'));
+	
+	    var newReq = new XMLHttpRequest();
+	    newReq.addEventListener('load', function () {
+	      window.location = "/";
+	    });
+	    newReq.open('DELETE', "https://api.github.com/gists/" + this.state.id);
+	    newReq.setRequestHeader("Authorization", "token " + user.accessToken);
+	    newReq.send();
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
@@ -25965,6 +25974,11 @@
 	        'h2',
 	        null,
 	        'Edit Gist'
+	      ),
+	      React.createElement(
+	        'button',
+	        { onClick: this.handleDelete },
+	        'Delete This Gist'
 	      ),
 	      React.createElement(
 	        'form',
