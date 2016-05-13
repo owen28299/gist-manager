@@ -48,7 +48,7 @@ const GistContent = React.createClass({
       var editMode = (
       <div>
         <button onClick={this.toggleEditMode}>Cancel</button>
-        <EditGist />
+        <EditGist files={this.props.content}/>
       </div>
       )
     }

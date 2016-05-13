@@ -2,10 +2,15 @@ const React = require('react');
 
 const EditGist = React.createClass({
   getInitialState : function() {
+    var files = this.props.files;
+    var file = files.files[Object.keys(files.files)[0]];
+
     return {
-      description : "",
-      filename : "",
-      content : "",
+      description : files.description,
+      filename : file.filename,
+      content : file.content,
+      id : files.id,
+      originalFileName : file.filename
     };
   },
   handleSubmit : function(event){
@@ -17,17 +22,18 @@ const EditGist = React.createClass({
       files : {}
     }
 
-    var filename = this.state.filename + ".md";
-
-    newGist.files[filename] = {
-      content : this.state.content
+    newGist.files[this.state.originalFileName] = {
+      content : this.state.content,
+      filename : this.state.filename
     }
+
+    console.log(newGist);
 
     var newReq = new XMLHttpRequest();
     newReq.addEventListener('load', function(){
       console.log(this)
     });
-    newReq.open('POST', "https://api.github.com/gists");
+    newReq.open('PATCH', "https://api.github.com/gists/" + this.state.id);
     newReq.setRequestHeader("Authorization", "token " + user.accessToken);
     newReq.send(JSON.stringify(newGist));
 

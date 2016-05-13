@@ -19937,7 +19937,7 @@
 	          { onClick: this.toggleEditMode },
 	          'Cancel'
 	        ),
-	        React.createElement(EditGist, null)
+	        React.createElement(EditGist, { files: this.props.content })
 	      );
 	    }
 	
@@ -25905,18 +25905,23 @@
 /* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	var React = __webpack_require__(1);
 	
 	var EditGist = React.createClass({
-	  displayName: "EditGist",
+	  displayName: 'EditGist',
 	
 	  getInitialState: function getInitialState() {
+	    var files = this.props.files;
+	    var file = files.files[Object.keys(files.files)[0]];
+	
 	    return {
-	      description: "",
-	      filename: "",
-	      content: ""
+	      description: files.description,
+	      filename: file.filename,
+	      content: file.content,
+	      id: files.id,
+	      originalFileName: file.filename
 	    };
 	  },
 	  handleSubmit: function handleSubmit(event) {
@@ -25928,17 +25933,18 @@
 	      files: {}
 	    };
 	
-	    var filename = this.state.filename + ".md";
-	
-	    newGist.files[filename] = {
-	      content: this.state.content
+	    newGist.files[this.state.originalFileName] = {
+	      content: this.state.content,
+	      filename: this.state.filename
 	    };
+	
+	    console.log(newGist);
 	
 	    var newReq = new XMLHttpRequest();
 	    newReq.addEventListener('load', function () {
 	      console.log(this);
 	    });
-	    newReq.open('POST', "https://api.github.com/gists");
+	    newReq.open('PATCH', "https://api.github.com/gists/" + this.state.id);
 	    newReq.setRequestHeader("Authorization", "token " + user.accessToken);
 	    newReq.send(JSON.stringify(newGist));
 	  },
@@ -25953,50 +25959,50 @@
 	  },
 	  render: function render() {
 	    return React.createElement(
-	      "div",
-	      { className: "Edit Gist" },
+	      'div',
+	      { className: 'Edit Gist' },
 	      React.createElement(
-	        "h2",
+	        'h2',
 	        null,
-	        "Edit Gist"
+	        'Edit Gist'
 	      ),
 	      React.createElement(
-	        "form",
+	        'form',
 	        { onSubmit: this.handleSubmit },
 	        React.createElement(
-	          "p",
+	          'p',
 	          null,
-	          "Gist Title:"
+	          'Gist Title:'
 	        ),
-	        React.createElement("input", {
-	          type: "text",
-	          placeholder: "Gist Title",
+	        React.createElement('input', {
+	          type: 'text',
+	          placeholder: 'Gist Title',
 	          value: this.state.description,
 	          onChange: this.handleDescriptionChange
 	        }),
 	        React.createElement(
-	          "p",
+	          'p',
 	          null,
-	          "Gist Filename:"
+	          'Gist Filename:'
 	        ),
-	        React.createElement("input", {
-	          type: "text",
-	          placeholder: "Gist Filename",
+	        React.createElement('input', {
+	          type: 'text',
+	          placeholder: 'Gist Filename',
 	          value: this.state.filename,
 	          onChange: this.handleFileNameChange
 	        }),
 	        React.createElement(
-	          "p",
+	          'p',
 	          null,
-	          "Content:"
+	          'Content:'
 	        ),
-	        React.createElement("input", {
-	          type: "text",
-	          placeholder: "Gist Title",
+	        React.createElement('input', {
+	          type: 'text',
+	          placeholder: 'Gist Title',
 	          value: this.state.content,
 	          onChange: this.handleContentChange
 	        }),
-	        React.createElement("input", { type: "submit" })
+	        React.createElement('input', { type: 'submit' })
 	      )
 	    );
 	  }
