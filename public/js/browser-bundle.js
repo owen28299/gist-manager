@@ -20100,6 +20100,15 @@
 	var Header = React.createClass({
 	  displayName: 'Header',
 	
+	  logout: function logout() {
+	    var logoutReq = new XMLHttpRequest();
+	    logoutReq.addEventListener('load', function () {
+	      localStorage.removeItem('user');
+	      window.location = "/";
+	    });
+	    logoutReq.open('GET', "/logout");
+	    logoutReq.send();
+	  },
 	  render: function render() {
 	    var user = JSON.parse(localStorage.getItem('user'));
 	    return React.createElement(
@@ -20109,6 +20118,11 @@
 	        'h1',
 	        null,
 	        'Welcome to Gist-Manager'
+	      ),
+	      React.createElement(
+	        'button',
+	        { onClick: this.logout },
+	        'Logout'
 	      ),
 	      React.createElement(
 	        'h2',

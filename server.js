@@ -69,6 +69,11 @@ app.get('/user', ensureAuthenticated, function(req, res){
   res.json(req.user);
 });
 
+app.get('/logout', function(req, res) {
+    req.logout();
+    res.send('Successfully logged out');
+  });
+
 app.get('*', function(req, res){
   res.sendFile('./public/index.html',
               {
