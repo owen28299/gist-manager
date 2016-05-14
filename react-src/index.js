@@ -21,13 +21,13 @@ function urlQuery(fields){
   fields = fields.split("&");
   fields = fields.map(function(element){
     return element.split("=");
-  })
+  });
 
   var fieldsObj = {};
 
   fields.forEach(function(element){
     fieldsObj[element[0]] = decodeURIComponent(element[1]);
-  })
+  });
 
   return fieldsObj;
 }

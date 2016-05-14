@@ -20300,6 +20300,11 @@
 	        'Gist Manager Landing Page'
 	      ),
 	      React.createElement(
+	        'p',
+	        null,
+	        'Gist management at your fingertips'
+	      ),
+	      React.createElement(
 	        'button',
 	        { onClick: this.logIn },
 	        'Log In Via GitHub'
