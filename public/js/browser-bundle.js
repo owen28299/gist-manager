@@ -50,7 +50,9 @@
 	    ReactDOM = __webpack_require__(158),
 	    GistList = __webpack_require__(159),
 	    CreateGist = __webpack_require__(161),
-	    Header = __webpack_require__(162);
+	    Header = __webpack_require__(162),
+	    LandingPage = __webpack_require__(225),
+	    NotFound = __webpack_require__(226);
 	
 	var ReactRouter = __webpack_require__(163);
 	var Router = ReactRouter.Router;
@@ -126,7 +128,14 @@
 	  window.location = "/";
 	}
 	
-	if (localStorage.getItem('user')) {
+	if (!localStorage.getItem('user')) {
+	  ReactDOM.render(React.createElement(
+	    Router,
+	    { history: browserHistory },
+	    React.createElement(Route, { path: '/', component: LandingPage }),
+	    React.createElement(Route, { path: '*', component: NotFound })
+	  ), document.getElementById('content'));
+	} else {
 	  ReactDOM.render(React.createElement(
 	    Router,
 	    { history: browserHistory },
@@ -134,11 +143,10 @@
 	      Route,
 	      { path: '/', component: Header },
 	      React.createElement(IndexRoute, { component: GistManagerPage }),
-	      React.createElement(Route, { path: 'creategist', component: CreateGist })
+	      React.createElement(Route, { path: 'creategist', component: CreateGist }),
+	      React.createElement(Route, { path: '*', component: NotFound })
 	    )
 	  ), document.getElementById('content'));
-	} else {
-	  window.location = "/auth/github";
 	}
 
 /***/ },
@@ -26037,6 +26045,68 @@
 	});
 	
 	module.exports = EditGist;
+
+/***/ },
+/* 225 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var LandingPage = React.createClass({
+	  displayName: 'LandingPage',
+	
+	  logIn: function logIn() {
+	    window.location = '/auth/github';
+	  },
+	  render: function render() {
+	    var user = JSON.parse(localStorage.getItem('user'));
+	    return React.createElement(
+	      'div',
+	      { className: 'landingpage' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        'Gist Manager Landing Page'
+	      ),
+	      React.createElement(
+	        'button',
+	        { onClick: this.logIn },
+	        'Log In Via GitHub'
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = LandingPage;
+
+/***/ },
+/* 226 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var NotFound = React.createClass({
+	  displayName: 'NotFound',
+	
+	  render: function render() {
+	    var user = JSON.parse(localStorage.getItem('user'));
+	    return React.createElement(
+	      'div',
+	      { className: '404' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        '404 NOT FOUND'
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = NotFound;
 
 /***/ }
 /******/ ]);

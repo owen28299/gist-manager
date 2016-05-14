@@ -2,7 +2,9 @@ const React          = require('react'),
       ReactDOM       = require('react-dom'),
       GistList       = require('./components/gistlist'),
       CreateGist     = require('./components/creategist'),
-      Header         = require('./components/header')
+      Header         = require('./components/header'),
+      LandingPage    = require('./components/landingPage'),
+      NotFound       = require('./components/404')
       ;
 
 const ReactRouter = require('react-router')
@@ -70,24 +72,31 @@ function urlQuery(fields){
 }
 
 
-
 if(window.location.search.length > 15){
   var userData = urlQuery(window.location.search);
   localStorage.setItem('user', JSON.stringify(userData));
   window.location = "/";
 }
 
-if(localStorage.getItem('user')) {
+if(!localStorage.getItem('user')){
+  ReactDOM.render(
+    <Router history={browserHistory}>
+      <Route path="/" component={LandingPage}></Route>
+      <Route path="*" component={NotFound}></Route>
+    </Router>,
+    document.getElementById('content')
+  )
+}
+
+else {
   ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={Header}>
         <IndexRoute component={GistManagerPage}></IndexRoute>
         <Route path="creategist" component={CreateGist}></Route>
+        <Route path="*" component={NotFound}></Route>
       </Route>
     </Router>,
     document.getElementById('content')
   );
-}
-else {
-  window.location = "/auth/github"
 }
