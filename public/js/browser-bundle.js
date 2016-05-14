@@ -77,7 +77,7 @@
 	  return fieldsObj;
 	}
 	
-	if (window.location.search.length > 15) {
+	if (window.location.search.length > 60) {
 	  var userData = urlQuery(window.location.search);
 	  localStorage.setItem('user', JSON.stringify(userData));
 	  window.location = "/";
