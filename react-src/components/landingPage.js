@@ -1,5 +1,9 @@
 const React = require('react');
 
+document.body.addEventListener('touchmove', function (ev) {
+  ev.preventDefault();
+});
+
 const LandingPage = React.createClass({
   logIn : function(){
     window.location = '/auth/github';
@@ -11,7 +15,7 @@ const LandingPage = React.createClass({
         <div className="landingbody">
           <h1>React Gist Manager</h1>
           <p>Gist management at your fingertips</p>
-          <button onClick={this.logIn}>Log In Via GitHub</button>
+          <button onClick={this.logIn}>Login with GitHub</button>
         </div>
         <div className="landingfooter">
           <p>

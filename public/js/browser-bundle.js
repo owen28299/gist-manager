@@ -20283,6 +20283,10 @@
 	
 	var React = __webpack_require__(1);
 	
+	document.body.addEventListener('touchmove', function (ev) {
+	  ev.preventDefault();
+	});
+	
 	var LandingPage = React.createClass({
 	  displayName: 'LandingPage',
 	
@@ -20310,7 +20314,7 @@
 	        React.createElement(
 	          'button',
 	          { onClick: this.logIn },
-	          'Log In Via GitHub'
+	          'Login with GitHub'
 	        )
 	      ),
 	      React.createElement(

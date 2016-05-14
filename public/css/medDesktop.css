@@ -1,4 +1,4 @@
-@media screen and (min-width: 500px) and (max-width: 1200px){
+@media screen and (min-width: 600px) and (max-width: 1200px){
 
   html {
     font-family: 'Raleway', sans-serif;
@@ -22,6 +22,27 @@
     flex-direction: column;
 
     color: white;
+  }
+
+  .landingbody h1 {
+    font-size: 60px;
+    margin-bottom: 30px;
+  }
+
+  .landingbody p {
+    margin-top: 10px;
+    font-size: 25px;
+  }
+
+  .landingbody button {
+    border: 0px;
+    background-color: hsl(200, 100%, 50%);
+    line-height: 30px;
+    color: white;
+    border-radius: 8px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 14px;
   }
 
   .landingfooter {
