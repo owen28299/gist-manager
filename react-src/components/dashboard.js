@@ -4,9 +4,6 @@ const React    = require('react'),
 const DashBoard = React.createClass({
   getInitialState: function(){
     return {
-      id : "",
-      username : "",
-      accessToken : "",
       gists : []
     }
   },
