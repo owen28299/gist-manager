@@ -20069,7 +20069,7 @@
 	      localStorage.removeItem('user');
 	      window.location = "/";
 	    });
-	    logoutReq.open('GET', "/logout");
+	    logoutReq.open('GET', "/auth/logout");
 	    logoutReq.send();
 	  },
 	  render: function render() {

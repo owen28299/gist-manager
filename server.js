@@ -8,7 +8,7 @@ const express        = require('express'),
       GitHubStrategy = require('passport-github2').Strategy,
       Github         = require('./githubfiles'),
       bodyParser     = require("body-parser"),
-      queryString    = require('querystring')
+      authRoute      = require("./routes/auth")
       ;
 
 passport.serializeUser(function(user, done) {
@@ -36,7 +36,7 @@ passport.use(new GitHubStrategy({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(session({
-  secret: 'keyboard cat',
+  secret: process.env.SECRET ||'keyboard cat',
   resave: false,
   saveUninitialized: false
 }));
@@ -44,35 +44,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static(__dirname + '/public'));
+app.use("/auth", authRoute);
 
-app.get('/auth/github',
-  passport.authenticate('github', { scope: [ 'gist' ] }),
-  function(req, res){
-    // The request will be redirected to GitHub for authentication, so this
-    // function will not be called.
-  });
-
-app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/' }),
-  function(req, res) {
-
-    var data = queryString.stringify({
-      accessToken : req.user.accessToken,
-      id : req.user.id,
-      username : req.user.username
-    });
-
-    res.redirect('/?' + data);
-  });
-
-app.get('/user', ensureAuthenticated, function(req, res){
-  res.json(req.user);
-});
-
-app.get('/logout', function(req, res) {
-    req.logout();
-    res.send('Successfully logged out');
-  });
 
 app.get('*', function(req, res){
   res.sendFile('./public/index.html',
@@ -85,7 +58,3 @@ app.listen(PORT, function(){
   console.log(`Server listening on port: ${PORT}`);
 });
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/');
-}
