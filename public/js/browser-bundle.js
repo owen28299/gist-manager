@@ -20295,19 +20295,43 @@
 	      'div',
 	      { className: 'landingpage' },
 	      React.createElement(
-	        'h1',
-	        null,
-	        'Gist Manager Landing Page'
+	        'div',
+	        { className: 'landingbody' },
+	        React.createElement(
+	          'h1',
+	          null,
+	          'Gist Manager Landing Page'
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          'Gist management at your fingertips'
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this.logIn },
+	          'Log In Via GitHub'
+	        )
 	      ),
 	      React.createElement(
-	        'p',
-	        null,
-	        'Gist management at your fingertips'
-	      ),
-	      React.createElement(
-	        'button',
-	        { onClick: this.logIn },
-	        'Log In Via GitHub'
+	        'div',
+	        { className: 'landingfooter' },
+	        React.createElement(
+	          'p',
+	          null,
+	          '© 2016 Owen Yang |',
+	          React.createElement(
+	            'a',
+	            { href: 'https://github.com/owen28299' },
+	            ' Github'
+	          ),
+	          ' |',
+	          React.createElement(
+	            'a',
+	            { href: 'https://www.linkedin.com/in/owen-yang-755b5124?trk=nav_responsive_tab_profile_pic' },
+	            ' LinkedIn'
+	          )
+	        )
 	      )
 	    );
 	  }
