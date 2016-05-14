@@ -1,58 +1,19 @@
 const React          = require('react'),
       ReactDOM       = require('react-dom'),
-      GistList       = require('./components/gistlist'),
+      DashBoard      = require('./components/dashboard'),
       CreateGist     = require('./components/creategist'),
       Header         = require('./components/header'),
       LandingPage    = require('./components/landingPage'),
       NotFound       = require('./components/404')
       ;
 
-const ReactRouter = require('react-router')
-const Router = ReactRouter.Router;
-const Route = ReactRouter.Route;
-const IndexRoute = ReactRouter.IndexRoute;
-const Link = ReactRouter.Link;
-const browserHistory = ReactRouter.browserHistory;
-
-
-//look at ES6 class declarations
-const GistManagerPage = React.createClass({
-  getInitialState: function(){
-    return {
-      id : "",
-      username : "",
-      accessToken : "",
-      gists : []
-    }
-  },
-  loadUserData: function(){
-    var user = JSON.parse(localStorage.getItem('user'));
-    this.setState({id : user.id});
-    this.setState({username : user.username});
-    this.setState({accessToken : user.accessToken});
-
-    var that = this;
-
-    var gistReq = new XMLHttpRequest();
-    gistReq.addEventListener('load', function(){
-      that.setState({gists : JSON.parse(this.responseText)});
-    });
-    gistReq.open('GET', "https://api.github.com/users/" + user.username + "/gists");
-    gistReq.setRequestHeader("Authorization", "token " + user.accessToken);
-    gistReq.send();
-  },
-  componentDidMount: function(){
-    this.loadUserData();
-  },
-  render : function(){
-    return (
-      <div className="mainPage">
-        <a href="/creategist">Create New Gist</a>
-        <GistList list={this.state.gists}/>
-      </div>
-    )
-  }
-})
+const ReactRouter    = require('react-router'),
+      Router         = ReactRouter.Router,
+      Route          = ReactRouter.Route,
+      IndexRoute     = ReactRouter.IndexRoute,
+      Link           = ReactRouter.Link,
+      browserHistory = ReactRouter.browserHistory
+      ;
 
 
 function urlQuery(fields){
@@ -92,7 +53,7 @@ else {
   ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={Header}>
-        <IndexRoute component={GistManagerPage}></IndexRoute>
+        <IndexRoute component={DashBoard}></IndexRoute>
         <Route path="creategist" component={CreateGist}></Route>
         <Route path="*" component={NotFound}></Route>
       </Route>

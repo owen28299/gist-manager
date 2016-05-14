@@ -48,63 +48,18 @@
 	
 	var React = __webpack_require__(1),
 	    ReactDOM = __webpack_require__(158),
-	    GistList = __webpack_require__(159),
+	    DashBoard = __webpack_require__(227),
 	    CreateGist = __webpack_require__(161),
 	    Header = __webpack_require__(162),
 	    LandingPage = __webpack_require__(225),
 	    NotFound = __webpack_require__(226);
 	
-	var ReactRouter = __webpack_require__(163);
-	var Router = ReactRouter.Router;
-	var Route = ReactRouter.Route;
-	var IndexRoute = ReactRouter.IndexRoute;
-	var Link = ReactRouter.Link;
-	var browserHistory = ReactRouter.browserHistory;
-	
-	//look at ES6 class declarations
-	var GistManagerPage = React.createClass({
-	  displayName: 'GistManagerPage',
-	
-	  getInitialState: function getInitialState() {
-	    return {
-	      id: "",
-	      username: "",
-	      accessToken: "",
-	      gists: []
-	    };
-	  },
-	  loadUserData: function loadUserData() {
-	    var user = JSON.parse(localStorage.getItem('user'));
-	    this.setState({ id: user.id });
-	    this.setState({ username: user.username });
-	    this.setState({ accessToken: user.accessToken });
-	
-	    var that = this;
-	
-	    var gistReq = new XMLHttpRequest();
-	    gistReq.addEventListener('load', function () {
-	      that.setState({ gists: JSON.parse(this.responseText) });
-	    });
-	    gistReq.open('GET', "https://api.github.com/users/" + user.username + "/gists");
-	    gistReq.setRequestHeader("Authorization", "token " + user.accessToken);
-	    gistReq.send();
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.loadUserData();
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'mainPage' },
-	      React.createElement(
-	        'a',
-	        { href: '/creategist' },
-	        'Create New Gist'
-	      ),
-	      React.createElement(GistList, { list: this.state.gists })
-	    );
-	  }
-	});
+	var ReactRouter = __webpack_require__(163),
+	    Router = ReactRouter.Router,
+	    Route = ReactRouter.Route,
+	    IndexRoute = ReactRouter.IndexRoute,
+	    Link = ReactRouter.Link,
+	    browserHistory = ReactRouter.browserHistory;
 	
 	function urlQuery(fields) {
 	  fields = fields.substring(1);
@@ -142,7 +97,7 @@
 	    React.createElement(
 	      Route,
 	      { path: '/', component: Header },
-	      React.createElement(IndexRoute, { component: GistManagerPage }),
+	      React.createElement(IndexRoute, { component: DashBoard }),
 	      React.createElement(Route, { path: 'creategist', component: CreateGist }),
 	      React.createElement(Route, { path: '*', component: NotFound })
 	    )
@@ -26107,6 +26062,61 @@
 	});
 	
 	module.exports = NotFound;
+
+/***/ },
+/* 227 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1),
+	    GistList = __webpack_require__(159);
+	
+	var DashBoard = React.createClass({
+	  displayName: 'DashBoard',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      id: "",
+	      username: "",
+	      accessToken: "",
+	      gists: []
+	    };
+	  },
+	  loadUserData: function loadUserData() {
+	    var user = JSON.parse(localStorage.getItem('user'));
+	    this.setState({ id: user.id });
+	    this.setState({ username: user.username });
+	    this.setState({ accessToken: user.accessToken });
+	
+	    var that = this;
+	
+	    var gistReq = new XMLHttpRequest();
+	    gistReq.addEventListener('load', function () {
+	      that.setState({ gists: JSON.parse(this.responseText) });
+	    });
+	    gistReq.open('GET', "https://api.github.com/users/" + user.username + "/gists");
+	    gistReq.setRequestHeader("Authorization", "token " + user.accessToken);
+	    gistReq.send();
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.loadUserData();
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'mainPage' },
+	      React.createElement(
+	        'a',
+	        { href: '/creategist' },
+	        'Create New Gist'
+	      ),
+	      React.createElement(GistList, { list: this.state.gists })
+	    );
+	  }
+	});
+	
+	module.exports = DashBoard;
 
 /***/ }
 /******/ ]);
