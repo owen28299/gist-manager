@@ -9,7 +9,7 @@ const LandingPage = React.createClass({
     return (
       <div className="landingpage">
         <div className="landingbody">
-          <h1>Gist Manager Landing Page</h1>
+          <h1>React Gist Manager</h1>
           <p>Gist management at your fingertips</p>
           <button onClick={this.logIn}>Log In Via GitHub</button>
         </div>

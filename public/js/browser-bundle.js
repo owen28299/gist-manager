@@ -20300,7 +20300,7 @@
 	        React.createElement(
 	          'h1',
 	          null,
-	          'Gist Manager Landing Page'
+	          'React Gist Manager'
 	        ),
 	        React.createElement(
 	          'p',
